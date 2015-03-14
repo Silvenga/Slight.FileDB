@@ -1,11 +1,8 @@
 ﻿using System.Web.Http;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Slight.FileDB.Server.Actors.Filters;
 
-using Slight.FileDB.Actors.Filters;
-
-namespace Slight.FileDB {
+namespace Slight.FileDB.Server {
     class Configuation : HttpConfiguration {
 
         public Configuation() {

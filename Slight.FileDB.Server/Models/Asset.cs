@@ -24,8 +24,8 @@ namespace Slight.FileDB.Server.Models {
 
         public bool IsValid {
             get {
-                var path = ApiHelper.MapPath(FullFilename);
-                return File.Exists(path) && ApiHelper.Md5HashFile(path) == Md5Hash;
+                var path = ApiHelper.MapPath(Config.BasePath, FullFilename);
+                return File.Exists(path) && ApiHelper.Md5HashFile(path).Equals(Md5Hash);
             }
         }
 

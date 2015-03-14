@@ -1,29 +1,16 @@
 ﻿using System;
 
-using Microsoft.Owin.Hosting;
-
-using Owin;
-
 namespace Slight.FileDB.Server {
 
-    class Startup {
+    public static class Startup {
 
-        static void Main(string[] args) {
+        public static void Main(string[] args) {
 
-            const string baseAddress = "http://localhost:9000/";
-
-            // Start OWIN host 
-            using(WebApp.Start<Startup>(url: baseAddress)) {
+            using(OwinConfiguation.CreateOwin()) {
 
                 Console.WriteLine("Owin started.");
                 Console.ReadLine();
             }
-        }
-
-        public void Configuration(IAppBuilder app) {
-
-            var config = new Configuation();
-            app.UseWebApi(config);
         }
     }
 }

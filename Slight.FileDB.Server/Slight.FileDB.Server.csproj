@@ -73,7 +73,7 @@
     <Compile Include="Actors\Exceptions\LockedException.cs" />
     <Compile Include="Actors\FileController.cs" />
     <Compile Include="Actors\Filters\LogActionFilter.cs" />
-    <Compile Include="Configuation.cs" />
+    <Compile Include="OwinConfiguation.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetResult.cs" />
     <Compile Include="Models\Config.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -24,7 +25,7 @@ namespace Slight.FileDB.Server.Models {
 
         public bool IsValid {
             get {
-                var path = ApiHelper.MapPath(Config.BasePath, FullFilename);
+                var path = ApiHelper.MapPath(Config.BasePath, Filename);
                 return File.Exists(path) && ApiHelper.Md5HashFile(path).Equals(Md5Hash);
             }
         }
@@ -35,14 +36,13 @@ namespace Slight.FileDB.Server.Models {
             }
         }
 
-        public string FullFilename {
+        public string Filename {
             get {
                 return string.Format("{0}{1}{2}{3}{4}", Folder, Path.DirectorySeparatorChar, Version, Config.FileDelimiter, Md5Hash);
             }
         }
 
-
-        public static Asset Create(string path) {
+        public static Asset Read(string path) {
 
             if(!File.Exists(path)) {
                 throw new Exception("File does not exist.");
@@ -53,6 +53,7 @@ namespace Slight.FileDB.Server.Models {
 
             var rawName = Path.GetFileName(path);
 
+            Debug.Assert(rawName != null, "rawName != null");
             var list = rawName.Split(
                     new[] {
                     Config.FileDelimiter
@@ -68,9 +69,10 @@ namespace Slight.FileDB.Server.Models {
                 Version = version
             };
         }
+
         public AssetResult ToResult() {
 
-            return new AssetResult(ApiHelper.MapPath(Config.BasePath, FullFilename), Id);
+            return new AssetResult(ApiHelper.MapPath(Config.BasePath, Filename), Id);
         }
     }
 }

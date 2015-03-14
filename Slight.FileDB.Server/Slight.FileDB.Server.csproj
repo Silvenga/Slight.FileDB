@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Actors\APiHelper.cs" />
     <Compile Include="Actors\AssetManager.cs" />
+    <Compile Include="Actors\Exceptions\ApiException.cs" />
     <Compile Include="Actors\Exceptions\LockedException.cs" />
     <Compile Include="Actors\FileController.cs" />
     <Compile Include="Actors\Filters\LogActionFilter.cs" />

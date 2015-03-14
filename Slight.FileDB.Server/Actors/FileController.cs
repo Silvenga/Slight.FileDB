@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -41,22 +42,26 @@ namespace Slight.FileDB.Server.Actors {
         }
 
         [HttpPost]
-        public async Task<IHttpActionResult> Upload([FromBody]string id, [FromBody]string version, [FromBody]string md5Hash) {
+        public async Task<IHttpActionResult> Upload(string id, [FromBody]string version, [FromBody]string md5Hash) {
 
-            if(!Request.Content.IsMimeMultipartContent())
+            if(!Request.Content.IsMimeMultipartContent()) {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
 
             var provider = new MultipartMemoryStreamProvider();
             await Request.Content.ReadAsMultipartAsync(provider);
 
-            foreach(var file in provider.Contents) {
+            var file = provider.Contents.FirstOrDefault();
 
-                var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
+            if(file == null) {
+                return BadRequest("No files found in the multipart upload. ");
+            }
 
+            var stream = await file.ReadAsStreamAsync();
 
-                var buffer = await file.ReadAsByteArrayAsync();
+            using(var manager = new AssetManager(id)) {
 
-
+                await manager.Create(stream, version, md5Hash);
             }
 
             return Ok();

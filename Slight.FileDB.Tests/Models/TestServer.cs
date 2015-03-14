@@ -9,6 +9,8 @@ using Slight.FileDB.Server;
 namespace Slight.FileDB.Tests.Models {
     public class TestServer : IDisposable {
 
+        private Random _random = new Random();
+
         public string ServerEndpoint {
             get;
             private set;
@@ -19,9 +21,9 @@ namespace Slight.FileDB.Tests.Models {
             private set;
         }
 
-        public TestServer(string serverEndpoint = "http://localhost:9000/") {
+        public TestServer(string serverEndpoint = "http://localhost:{0}/") {
 
-            ServerEndpoint = serverEndpoint;
+            ServerEndpoint = string.Format(serverEndpoint, _random.Next(49152, 65535));
             Server = OwinConfiguation.CreateOwin(ServerEndpoint);
         }
 

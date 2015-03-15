@@ -11,25 +11,26 @@ namespace Slight.FileDB.Tests.Models {
 
         private Random _random = new Random();
 
-        public string ServerEndpoint {
+        protected static string LocalEndpoint {
             get;
             private set;
         }
 
-        public IDisposable Server {
+        private static IDisposable Server {
             get;
-            private set;
+            set;
         }
 
-        public TestServer(string serverEndpoint = "http://localhost:{0}/") {
+        protected TestServer(string serverEndpoint = "http://localhost:{0}/") {
 
-            ServerEndpoint = string.Format(serverEndpoint, _random.Next(49152, 65535));
-            Server = OwinConfiguation.CreateOwin(ServerEndpoint);
+            var port = 9090;// _random.Next(49152, 65535);
+            LocalEndpoint = string.Format(serverEndpoint, port);
+            Server = Server ?? OwinConfiguation.CreateOwin(LocalEndpoint);
         }
 
         public void Dispose() {
 
-            Server.Dispose();
+            //Server.Dispose();
         }
 
     }

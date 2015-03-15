@@ -23,10 +23,17 @@ namespace Slight.FileDB.Server.Models {
             set;
         }
 
-        public bool IsValid {
+        public bool Valid {
             get {
                 var path = ApiHelper.MapPath(Config.BasePath, Filename);
                 return File.Exists(path) && ApiHelper.Md5HashFile(path).Equals(Md5Hash);
+            }
+        }
+
+        public bool Exits {
+            get {
+                var path = ApiHelper.MapPath(Config.BasePath, Filename);
+                return File.Exists(path);
             }
         }
 
@@ -52,12 +59,11 @@ namespace Slight.FileDB.Server.Models {
             var id = parrentDir.Name;
 
             var rawName = Path.GetFileName(path);
-
-            Debug.Assert(rawName != null, "rawName != null");
-            var list = rawName.Split(
+            var list =
+                rawName.Split(
                     new[] {
-                    Config.FileDelimiter
-                },
+                        Config.FileDelimiter
+                    },
                     StringSplitOptions.RemoveEmptyEntries);
 
             var version = list.First();

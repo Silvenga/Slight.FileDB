@@ -68,12 +68,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actors\APiHelper.cs" />
+    <Compile Include="Actors\ApiHelper.cs" />
     <Compile Include="Actors\AssetManager.cs" />
     <Compile Include="Actors\Exceptions\ApiException.cs" />
     <Compile Include="Actors\Exceptions\LockedException.cs" />
     <Compile Include="Actors\FileController.cs" />
     <Compile Include="Actors\Filters\LogActionFilter.cs" />
+    <Compile Include="Models\AssetViewModel.cs" />
     <Compile Include="OwinConfiguation.cs" />
     <Compile Include="Models\Asset.cs" />
     <Compile Include="Models\AssetResult.cs" />

@@ -16,6 +16,11 @@ namespace Slight.FileDB.Server {
             var config = new HttpConfiguration();
 
             config.Routes.MapHttpRoute(
+                name: "Api0",
+                routeTemplate: "api/{controller}/{id}/{action}/{version}"
+                );
+
+            config.Routes.MapHttpRoute(
                 name: "Api1",
                 routeTemplate: "api/{controller}/{id}/{action}",
                 defaults: new {

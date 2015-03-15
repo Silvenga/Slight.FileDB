@@ -98,10 +98,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\test\1.0.0.0-65a8e27d8879283831b664bd8b7f0ad4">
+    <Content Include="Content\preExists\1.0.0.0-65a8e27d8879283831b664bd8b7f0ad4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
+    <None Include="TestFiles\upload.test">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Slight.FileDB.Client\Slight.FileDB.Client.csproj">
@@ -113,9 +116,7 @@
       <Name>Slight.FileDB.Server</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\test2\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

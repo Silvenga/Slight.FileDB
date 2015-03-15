@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Web.Http;
 
 namespace Slight.FileDB.Server.Actors {
     public static class ApiHelper {
@@ -23,6 +26,16 @@ namespace Slight.FileDB.Server.Actors {
                     return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
                 }
             }
+        }
+
+        public static HttpResponseException Error(string message, HttpStatusCode code = HttpStatusCode.BadRequest) {
+
+            var resp = new HttpResponseMessage(code) {
+                Content = new StringContent(message),
+                ReasonPhrase = message
+            };
+
+            return new HttpResponseException(resp);
         }
     }
 }

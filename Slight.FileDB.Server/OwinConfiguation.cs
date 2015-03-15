@@ -15,23 +15,25 @@ namespace Slight.FileDB.Server {
 
             var config = new HttpConfiguration();
 
-            config.Routes.MapHttpRoute(
-                name: "Api0",
-                routeTemplate: "api/{controller}/{id}/{action}/{version}"
-                );
+            config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "Api1",
-                routeTemplate: "api/{controller}/{id}/{action}",
-                defaults: new {
-                    id = RouteParameter.Optional
-                }
-                );
+            //config.Routes.MapHttpRoute(
+            //    name: "Api0",
+            //    routeTemplate: "api/{controller}/{id}/{action}/{version}"
+            //    );
 
-            config.Routes.MapHttpRoute(
-                name: "Api2",
-                routeTemplate: "api/{controller}/{action}"
-                );
+            //config.Routes.MapHttpRoute(
+            //    name: "Api1",
+            //    routeTemplate: "api/{controller}/{id}/{action}",
+            //    defaults: new {
+            //        id = RouteParameter.Optional
+            //    }
+            //    );
+
+            //config.Routes.MapHttpRoute(
+            //    name: "Api2",
+            //    routeTemplate: "api/{controller}/{action}"
+            //    );
 
             config.Filters.Add(new LogActionFilter());
 

@@ -18,7 +18,6 @@ namespace Slight.FileDB.Server.Actors.Filters {
 
             await Task.Run(
                 delegate {
-
                     var message = string.Format("{0} {1} {2}", method, resource, status);
                     Console.WriteLine(message);
                 });

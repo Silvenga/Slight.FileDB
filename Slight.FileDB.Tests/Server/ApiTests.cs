@@ -39,7 +39,7 @@ namespace Slight.FileDB.Tests.Server {
 
             var client = new RestClient(LocalEndpoint);
 
-            var request = new RestRequest("api/file/{id}/latestmeta", Method.GET);
+            var request = new RestRequest("api/file/{id}/latest/meta", Method.GET);
             request.AddUrlSegment("id", PreExists);
 
             var response = client.Execute<Asset>(request);
@@ -73,7 +73,7 @@ namespace Slight.FileDB.Tests.Server {
 
             var client = new RestClient(LocalEndpoint);
 
-            var request = new RestRequest("api/file/{id}/versionmeta/{version}", Method.GET);
+            var request = new RestRequest("api/file/{id}/version/{version}/meta", Method.GET);
             request.AddUrlSegment("id", PreExists);
             request.AddUrlSegment("version", version);
 
@@ -92,9 +92,9 @@ namespace Slight.FileDB.Tests.Server {
 
             var client = new RestClient(LocalEndpoint);
 
-            var request = new RestRequest("api/file/{id}/latest/{version}", Method.GET);
+            var request = new RestRequest("api/file/{id}/version/{version}", Method.GET);
             request.AddUrlSegment("id", PreExists);
-            request.AddUrlSegment("id", version);
+            request.AddUrlSegment("version", version);
 
             var response = client.Execute(request);
 
@@ -114,7 +114,7 @@ namespace Slight.FileDB.Tests.Server {
 
             var request = new RestRequest("api/file/{id}/version/{version}", Method.GET);
             request.AddUrlSegment("id", id);
-            request.AddUrlSegment("id", version);
+            request.AddUrlSegment("version", version);
 
             var response = client.Execute(request);
 
@@ -167,7 +167,7 @@ namespace Slight.FileDB.Tests.Server {
             Assert.True(response.Data.Version.CompareTo(version) == 0);
 
 
-            var request2 = new RestRequest("api/file/{id}/latestmeta", Method.GET);
+            var request2 = new RestRequest("api/file/{id}/latest/meta", Method.GET);
             request2.AddUrlSegment("id", UploadTest);
 
             var response2 = client.Execute<Asset>(request2);
@@ -177,7 +177,7 @@ namespace Slight.FileDB.Tests.Server {
             Assert.Equal(response2.Data.Id, UploadTest);
             Assert.True(response2.Data.Version.CompareTo(version) == 0);
 
-            var request3 = new RestRequest("api/file/{id}/versionmeta/{version}", Method.GET);
+            var request3 = new RestRequest("api/file/{id}/version/{version}/meta", Method.GET);
             request3.AddUrlSegment("id", UploadTest);
             request3.AddUrlSegment("version", version);
 

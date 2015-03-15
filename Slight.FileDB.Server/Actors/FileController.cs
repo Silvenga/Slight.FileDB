@@ -4,16 +4,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-using Slight.FileDB.Server.Actors.Exceptions;
 using Slight.FileDB.Server.Models;
 
 namespace Slight.FileDB.Server.Actors {
 
+    [RoutePrefix("api/file")]
     public class FileController : ApiController {
 
         public const string BasePath = "";
 
-        [HttpGet]
+        [HttpGet, Route("{id}/latest/meta", Order = 1)]
         public async Task<Asset> LatestMeta(string id) {
 
             using(var manager = new AssetManager(id)) {
@@ -28,7 +28,7 @@ namespace Slight.FileDB.Server.Actors {
             }
         }
 
-        [HttpGet]
+        [HttpGet, Route("{id}/latest", Order = 2)]
         public async Task<AssetResult> Latest(string id) {
 
             using(var manager = new AssetManager(id)) {
@@ -44,7 +44,7 @@ namespace Slight.FileDB.Server.Actors {
         }
 
 
-        [HttpGet]
+        [HttpGet, Route("{id}/version/{version}/meta", Order = 1)]
         public async Task<Asset> VersionMeta(string id, string version) {
 
             using(var manager = new AssetManager(id)) {
@@ -59,7 +59,7 @@ namespace Slight.FileDB.Server.Actors {
             }
         }
 
-        [HttpGet]
+        [HttpGet, Route("{id}/version/{version}", Order = 2)]
         public async Task<AssetResult> Version(string id, string version) {
 
             using(var manager = new AssetManager(id)) {
@@ -74,7 +74,8 @@ namespace Slight.FileDB.Server.Actors {
             }
         }
 
-        [HttpPost]
+
+        [HttpPost, Route("{id}/upload/{version}", Order = 1)]
         public async Task<Asset> Upload(string id, string version) {
 
             if(!Request.Content.IsMimeMultipartContent()) {

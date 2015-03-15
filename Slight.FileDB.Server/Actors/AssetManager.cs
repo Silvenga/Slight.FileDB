@@ -5,16 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-using Slight.FileDB.Server.Actors.Exceptions;
 using Slight.FileDB.Server.Models;
 
 namespace Slight.FileDB.Server.Actors {
     public class AssetManager : IDisposable {
-
-        public static bool IsLocked {
-            get;
-            private set;
-        }
 
         public string Id {
             get;
@@ -23,12 +17,7 @@ namespace Slight.FileDB.Server.Actors {
 
         public AssetManager(string id) {
 
-            if(IsLocked) {
-                throw new LockedException();
-            }
-
             Id = id;
-            IsLocked = true;
         }
 
         public async Task<bool> ExistsAndValid(string version, string md5Hash) {
@@ -132,7 +121,6 @@ namespace Slight.FileDB.Server.Actors {
 
         public void Dispose() {
 
-            IsLocked = false;
         }
 
     }

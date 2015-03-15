@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Slight.FileDB.Server {
 
@@ -6,11 +7,20 @@ namespace Slight.FileDB.Server {
 
         public static void Main(string[] args) {
 
-            using(OwinConfiguation.CreateOwin()) {
+            var host = "http://localhost:9000/";
 
-                Console.WriteLine("Owin started.");
-                Console.ReadLine();
+            if(args.Any() && !string.IsNullOrWhiteSpace(args.First())) {
+                host = args.First();
             }
+
+            using(OwinConfiguation.CreateOwin(host)) {
+
+                Console.WriteLine("Slight.FileDB started on {0}.", host);
+                Console.WriteLine("Any key to exit.");
+                Console.ReadKey();
+            }
+
+            Console.WriteLine("Exiting...");
         }
     }
 }

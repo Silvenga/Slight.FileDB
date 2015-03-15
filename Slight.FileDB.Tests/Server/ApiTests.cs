@@ -1,17 +1,15 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Net;
-
+using NUnit.Framework;
 using RestSharp;
-
 using Slight.FileDB.Server.Actors;
 using Slight.FileDB.Server.Models;
 using Slight.FileDB.Tests.Models;
 
-using Xunit;
-
 namespace Slight.FileDB.Tests.Server {
 
+    [TestFixture]
     public class ApiTests : TestServer {
 
         private const string UploadTest = "upload.test";
@@ -34,7 +32,7 @@ namespace Slight.FileDB.Tests.Server {
             }
         }
 
-        [Fact]
+        [Test]
         public void LatestMeta() {
 
             var client = new RestClient(LocalEndpoint);
@@ -44,13 +42,13 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute<Asset>(request);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Data.Valid);
-            Assert.Equal(response.Data.Id, PreExists);
+            Assert.AreEqual(response.Data.Id, PreExists);
             Assert.True(response.Data.Version.CompareTo("1.0.0.0") >= 0);
         }
 
-        [Fact]
+        [Test]
         public void Latest() {
 
             var client = new RestClient(LocalEndpoint);
@@ -60,13 +58,13 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute(request);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal("Hello, World!", response.Content);
-            Assert.Equal("application/octet-stream", response.ContentType);
-            Assert.Equal("attachment; filename=" + PreExists, response.Headers.First(x => x.Name.Equals("Content-Disposition")).Value);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("Hello, World!", response.Content);
+            Assert.AreEqual("application/octet-stream", response.ContentType);
+            Assert.AreEqual("attachment; filename=" + PreExists, response.Headers.First(x => x.Name.Equals("Content-Disposition")).Value);
         }
 
-        [Fact]
+        [Test]
         public void VersionMeta() {
 
             const string version = "1.0.0.0";
@@ -79,13 +77,13 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute<Asset>(request);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Data.Valid);
-            Assert.Equal(response.Data.Id, PreExists);
+            Assert.AreEqual(response.Data.Id, PreExists);
             Assert.True(response.Data.Version.CompareTo("1.0.0.0") == 0);
         }
 
-        [Fact]
+        [Test]
         public void Version() {
 
             const string version = "1.0.0.0";
@@ -98,16 +96,16 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute(request);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal("Hello, World!", response.Content);
-            Assert.Equal("application/octet-stream", response.ContentType);
-            Assert.Equal("attachment; filename=" + PreExists, response.Headers.First(x => x.Name.Equals("Content-Disposition")).Value);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual("Hello, World!", response.Content);
+            Assert.AreEqual("application/octet-stream", response.ContentType);
+            Assert.AreEqual("attachment; filename=" + PreExists, response.Headers.First(x => x.Name.Equals("Content-Disposition")).Value);
         }
 
-        [Theory]
-        [InlineData("test", "notexists")]
-        [InlineData("notexists", "1.0.0.0")]
-        [InlineData("notexists", "notexists")]
+
+        [TestCase("test", "notexists")]
+        [TestCase("notexists", "1.0.0.0")]
+        [TestCase("notexists", "notexists")]
         public void VersionNotFound(string id, string version) {
 
             var client = new RestClient(LocalEndpoint);
@@ -118,10 +116,10 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute(request);
 
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-        [Fact]
+        [Test]
         public void LatestNotFound() {
 
             var client = new RestClient(LocalEndpoint);
@@ -131,10 +129,10 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute(request);
 
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-        [Fact]
+        [Test]
         public void LatestNoVersions() {
 
             var client = new RestClient(LocalEndpoint);
@@ -144,10 +142,10 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute(request);
 
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-        [Fact]
+        [Test]
         public void Upload() {
 
             const string version = "2.0.0.0";
@@ -161,9 +159,9 @@ namespace Slight.FileDB.Tests.Server {
 
             var response = client.Execute<Asset>(request);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.True(response.Data.Valid);
-            Assert.Equal(response.Data.Id, UploadTest);
+            Assert.AreEqual(response.Data.Id, UploadTest);
             Assert.True(response.Data.Version.CompareTo(version) == 0);
 
 
@@ -172,9 +170,9 @@ namespace Slight.FileDB.Tests.Server {
 
             var response2 = client.Execute<Asset>(request2);
 
-            Assert.Equal(HttpStatusCode.OK, response2.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response2.StatusCode);
             Assert.True(response2.Data.Valid);
-            Assert.Equal(response2.Data.Id, UploadTest);
+            Assert.AreEqual(response2.Data.Id, UploadTest);
             Assert.True(response2.Data.Version.CompareTo(version) == 0);
 
             var request3 = new RestRequest("api/file/{id}/version/{version}/meta", Method.GET);
@@ -183,13 +181,13 @@ namespace Slight.FileDB.Tests.Server {
 
             var response3 = client.Execute<Asset>(request3);
 
-            Assert.Equal(HttpStatusCode.OK, response3.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response3.StatusCode);
             Assert.True(response3.Data.Valid);
-            Assert.Equal(response3.Data.Id, UploadTest);
+            Assert.AreEqual(response3.Data.Id, UploadTest);
             Assert.True(response3.Data.Version.CompareTo(version) == 0);
         }
 
-        [Fact]
+        [Test]
         public void UploadDuplicate() {
 
             const string version = "2.0.0.0";
@@ -204,7 +202,7 @@ namespace Slight.FileDB.Tests.Server {
             client.Execute<Asset>(request);
             var response = client.Execute<Asset>(request);
 
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }

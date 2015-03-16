@@ -59,7 +59,7 @@ namespace Slight.FileDB.Server.Actors {
                 Version = version.EscapeString()
             };
 
-            var contentPath = ApiHelper.MapPath(Config.BasePath);
+            var contentPath = ApiHelper.MapPath();
             var parrentPath = Path.Combine(contentPath, asset.Folder);
 
             if(!Directory.Exists(parrentPath)) {
@@ -108,7 +108,7 @@ namespace Slight.FileDB.Server.Actors {
 
         private IEnumerable<Asset> Files() {
 
-            var parrentPath = ApiHelper.MapPath(Config.BasePath, Id);
+            var parrentPath = ApiHelper.MapPath(Id);
 
             if(!Directory.Exists(parrentPath)) {
                 throw ApiHelper.Error("File has no candidates.", HttpStatusCode.NotFound);

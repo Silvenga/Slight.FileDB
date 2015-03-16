@@ -21,12 +21,12 @@ namespace Slight.FileDB.Tests.Server {
 
         public ApiTests() {
 
-            var uploadDirectory = ApiHelper.MapPath(Config.BasePath, UploadTest);
+            var uploadDirectory = ApiHelper.MapPath(UploadTest);
             if(Directory.Exists(uploadDirectory)) {
                 Directory.Delete(uploadDirectory, true);
             }
 
-            var noVersionDirectory = ApiHelper.MapPath(Config.BasePath, NoVersions);
+            var noVersionDirectory = ApiHelper.MapPath(NoVersions);
             if(!Directory.Exists(noVersionDirectory)) {
                 Directory.CreateDirectory(noVersionDirectory);
             }

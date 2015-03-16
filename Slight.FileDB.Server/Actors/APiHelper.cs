@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Web.Http;
+
+using Slight.FileDB.Server.Models;
 
 namespace Slight.FileDB.Server.Actors {
     public static class ApiHelper {
 
         public static string MapPath(params string[] paths) {
 
-            var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
-            Debug.Assert(basePath != null, "basePath != null");
-            var path = Path.Combine(new Uri(basePath).LocalPath, Path.Combine(paths));
+            var path = (paths.Any()) ? Path.Combine(Shared.BasePath, Path.Combine(paths)) : Shared.BasePath;
 
             return path;
         }

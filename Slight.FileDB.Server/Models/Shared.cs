@@ -1,5 +1,5 @@
 ﻿namespace Slight.FileDB.Server.Models {
-    public static class Config {
+    public static class Shared {
 
         private static string _basePath = "content";
         private static string _fileDelimiter = "-";

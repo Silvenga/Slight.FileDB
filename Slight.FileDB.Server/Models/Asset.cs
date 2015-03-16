@@ -25,14 +25,14 @@ namespace Slight.FileDB.Server.Models {
 
         public bool Valid {
             get {
-                var path = ApiHelper.MapPath(Config.BasePath, Filename);
+                var path = ApiHelper.MapPath(Filename);
                 return File.Exists(path) && ApiHelper.Md5HashFile(path).Equals(Md5Hash);
             }
         }
 
         public bool Exits {
             get {
-                var path = ApiHelper.MapPath(Config.BasePath, Filename);
+                var path = ApiHelper.MapPath(Filename);
                 return File.Exists(path);
             }
         }
@@ -45,7 +45,7 @@ namespace Slight.FileDB.Server.Models {
 
         public string Filename {
             get {
-                return string.Format("{0}{1}{2}{3}{4}", Folder, Path.DirectorySeparatorChar, Version, Config.FileDelimiter, Md5Hash);
+                return string.Format("{0}{1}{2}{3}{4}", Folder, Path.DirectorySeparatorChar, Version, Shared.FileDelimiter, Md5Hash);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Slight.FileDB.Server.Models {
             var list =
                 rawName.Split(
                     new[] {
-                        Config.FileDelimiter
+                        Shared.FileDelimiter
                     },
                     StringSplitOptions.RemoveEmptyEntries);
 
@@ -78,7 +78,7 @@ namespace Slight.FileDB.Server.Models {
 
         public AssetResult ToResult() {
 
-            return new AssetResult(ApiHelper.MapPath(Config.BasePath, Filename), Id);
+            return new AssetResult(ApiHelper.MapPath(Filename), Id);
         }
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
-using Slight.FileDB.Server;
+using Slight.FileDB.Server.Models;
 
 namespace Slight.FileDB.Tests.Models {
     public class TestServer : IDisposable {
 
-        private Random _random = new Random();
-
         protected static string LocalEndpoint {
+            get;
+            private set;
+        }
+
+        protected static string ContentDirectory {
             get;
             private set;
         }
@@ -23,9 +23,11 @@ namespace Slight.FileDB.Tests.Models {
 
         protected TestServer(string serverEndpoint = "http://localhost:{0}/") {
 
-            var port = 9090;// _random.Next(49152, 65535);
+            const int port = 9090; // _random.Next(49152, 65535);
             LocalEndpoint = string.Format(serverEndpoint, port);
-            Server = Server ?? OwinConfiguation.CreateOwin(LocalEndpoint);
+            ContentDirectory = Path.Combine(Directory.GetCurrentDirectory(), "content");
+
+            Server = Server ?? OwinConfiguation.CreateOwin(LocalEndpoint, ContentDirectory);
         }
 
         public void Dispose() {

@@ -13,7 +13,7 @@ namespace Slight.FileDB.Tests.Server {
     public class ApiTests : TestServer {
 
         private const string UploadTest = "upload.test";
-        private const string UploadTestFile = @"TestFiles\upload.test";
+        private static readonly string UploadTestFile = Path.Combine("TestFiles", "upload.test");
 
         private const string NoVersions = "noVersions";
         private const string NoFile = "noExist";

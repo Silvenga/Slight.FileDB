@@ -25,7 +25,7 @@ namespace Slight.FileDB.Tests.Models {
 
             const int port = 9090; // _random.Next(49152, 65535);
             LocalEndpoint = string.Format(serverEndpoint, port);
-            ContentDirectory = Path.Combine(Directory.GetCurrentDirectory(), "content");
+            ContentDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Content");
 
             Server = Server ?? OwinConfiguation.CreateOwin(LocalEndpoint, ContentDirectory);
         }
